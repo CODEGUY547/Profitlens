@@ -1,0 +1,31 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+:root { color-scheme: light; }
+* { box-sizing: border-box; }
+html { background: #f6f4ef; }
+body { margin: 0; overflow-x: hidden; background: #f6f4ef; color: #18241d; font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+button, input, select, textarea { font: inherit; }
+button { cursor: pointer; }
+svg { stroke-width: 1.9; }
+
+@layer components {
+  .primary { @apply flex items-center gap-2 rounded-xl bg-[#1d6b3a] px-4 py-3 text-sm font-semibold text-white shadow-[0_8px_24px_rgba(29,107,58,.18)] transition hover:bg-[#175b31] disabled:cursor-not-allowed disabled:opacity-60; }
+  .secondary { @apply rounded-xl border border-[#d6ddd5] px-5 py-3 text-sm font-semibold; }
+  .primary svg, .secondary svg { @apply h-[18px] w-[18px]; }
+  .card { @apply rounded-3xl border border-[#e0e3dd] bg-white p-5 shadow-[0_8px_30px_rgba(33,50,39,.04)] sm:p-6; }
+  .eyebrow { @apply mb-2 text-xs font-bold tracking-[.12em] text-[#728078]; }
+  .error { @apply mb-5 flex items-center justify-between rounded-xl border border-[#efc8c2] bg-[#fff1ef] px-4 py-3 text-sm text-[#8b2c20]; }
+  .error svg { @apply h-[17px] w-[17px]; }
+  .mobile-nav { @apply fixed inset-x-0 bottom-0 z-30 grid grid-cols-3 border-t border-[#dfe4dc] bg-[#fbfaf7]/95 px-4 pb-[max(12px,env(safe-area-inset-bottom))] pt-3 backdrop-blur lg:hidden; }
+  .modal { @apply fixed inset-0 z-50 flex items-end justify-center bg-[#13251a]/45 backdrop-blur-sm sm:items-center sm:p-5; }
+  .modal-sheet { @apply max-h-[96vh] w-full overflow-y-auto rounded-t-3xl bg-[#fbfaf7] shadow-2xl sm:rounded-3xl; }
+  .modal-head { @apply sticky top-0 z-10 flex items-center justify-between border-b border-[#e3e6e0] bg-[#fbfaf7]/95 px-5 py-4 backdrop-blur; }
+  .modal-head svg { @apply h-5 w-5; }
+  .modal-actions { @apply sticky bottom-0 flex gap-3 border-t border-[#e3e6e0] bg-[#fbfaf7]/95 px-5 py-4 backdrop-blur sm:justify-end; }
+  .form-control input, .form-control select, .form-control textarea { @apply w-full rounded-xl border border-[#dbe1da] bg-white px-3 py-2.5 text-sm outline-none transition placeholder:text-[#abb2ac] focus:border-[#4a875e] focus:ring-2 focus:ring-[#4a875e]/10; }
+}
+
+@media (max-width: 640px) {
+  .card { border-radius: 1.25rem; }
+}
