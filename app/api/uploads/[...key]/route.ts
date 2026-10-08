@@ -1,13 +1,23 @@
-import { env } from "cloudflare:workers";
+import { requireUser } from "@/lib/supabase/server";
 
-export async function GET(_request: Request, context: { params: Promise<{ key: string[] }> }) {
-  if (!env.BUCKET) return new Response("Storage unavailable", { status: 500 });
+export async function GET(
+  _request: Request,
+  context: { params: Promise<{ key: string[] }> },
+) {
+  const { supabase, userId } = await requireUser();
+  if (!userId) return new Response("Unauthorized", { status: 401 });
+
   const { key } = await context.params;
-  const object = await env.BUCKET.get(key.join("/"));
-  if (!object) return new Response("Not found", { status: 404 });
-  const headers = new Headers();
-  object.writeHttpMetadata(headers);
-  headers.set("etag", object.httpEtag);
-  headers.set("cache-control", "private, max-age=3600");
-  return new Response(object.body, { headers });
+  const pathname = key.join("/");
+  if (!pathname.startsWith(`${userId}/`)) return new Response("Forbidden", { status: 403 });
+
+  const { data, error } = await supabase.storage.from("order-photos").download(pathname);
+  if (error || !data) return new Response("Not found", { status: 404 });
+
+  return new Response(await data.arrayBuffer(), {
+    headers: {
+      "content-type": data.type || "application/octet-stream",
+      "cache-control": "private, max-age=3600",
+    },
+  });
 }
