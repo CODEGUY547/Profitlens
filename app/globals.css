@@ -3,29 +3,63 @@
 
 :root { color-scheme: light; }
 * { box-sizing: border-box; }
-html { background: #f6f4ef; }
-body { margin: 0; overflow-x: hidden; background: #f6f4ef; color: #18241d; font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+html { width: 100%; max-width: 100%; overflow-x: hidden; background: #f6f4ef; }
+body { width: 100%; min-width: 0; max-width: 100%; margin: 0; overflow-x: hidden; background: #f6f4ef; color: #18241d; font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
 button, input, select, textarea { font: inherit; }
 button { cursor: pointer; }
+button:disabled { cursor: not-allowed; }
 svg { stroke-width: 1.9; }
+
+:focus-visible { outline: 3px solid rgba(29, 107, 58, .28); outline-offset: 2px; }
 
 @layer components {
   .primary { @apply flex items-center gap-2 rounded-xl bg-[#1d6b3a] px-4 py-3 text-sm font-semibold text-white shadow-[0_8px_24px_rgba(29,107,58,.18)] transition hover:bg-[#175b31] disabled:cursor-not-allowed disabled:opacity-60; }
-  .secondary { @apply rounded-xl border border-[#d6ddd5] px-5 py-3 text-sm font-semibold; }
+  .secondary { @apply inline-flex min-h-11 items-center gap-2 rounded-xl border border-[#d6ddd5] bg-[#fffdf8] px-5 py-2.5 text-sm font-semibold transition hover:bg-[#f4f1e9]; }
   .primary svg, .secondary svg { @apply h-[18px] w-[18px]; }
   .card { @apply rounded-3xl border border-[#e0e3dd] bg-white p-5 shadow-[0_8px_30px_rgba(33,50,39,.04)] sm:p-6; }
   .eyebrow { @apply mb-2 text-xs font-bold tracking-[.12em] text-[#728078]; }
   .error { @apply mb-5 flex items-center justify-between rounded-xl border border-[#efc8c2] bg-[#fff1ef] px-4 py-3 text-sm text-[#8b2c20]; }
   .error svg { @apply h-[17px] w-[17px]; }
-  .mobile-nav { @apply fixed inset-x-0 bottom-0 z-30 grid grid-cols-3 border-t border-[#dfe4dc] bg-[#fbfaf7]/95 px-4 pb-[max(12px,env(safe-area-inset-bottom))] pt-3 backdrop-blur lg:hidden; }
+  .mobile-nav { @apply fixed inset-x-0 bottom-0 z-30 grid w-full min-w-0 grid-cols-3 border-t border-[#dfe4dc] bg-[#fbfaf7]/95 px-2 pb-[max(12px,env(safe-area-inset-bottom))] pt-2 backdrop-blur lg:hidden; }
   .modal { @apply fixed inset-0 z-50 flex items-end justify-center bg-[#13251a]/45 backdrop-blur-sm sm:items-center sm:p-5; }
   .modal-sheet { @apply max-h-[96vh] w-full overflow-y-auto rounded-t-3xl bg-[#fbfaf7] shadow-2xl sm:rounded-3xl; }
   .modal-head { @apply sticky top-0 z-10 flex items-center justify-between border-b border-[#e3e6e0] bg-[#fbfaf7]/95 px-5 py-4 backdrop-blur; }
   .modal-head svg { @apply h-5 w-5; }
-  .modal-actions { @apply sticky bottom-0 flex gap-3 border-t border-[#e3e6e0] bg-[#fbfaf7]/95 px-5 py-4 backdrop-blur sm:justify-end; }
+  .modal-actions { @apply sticky bottom-0 flex min-w-0 flex-wrap gap-3 border-t border-[#e3e6e0] bg-[#fbfaf7]/95 px-4 py-4 backdrop-blur sm:justify-end sm:px-5; }
   .form-control input, .form-control select, .form-control textarea { @apply w-full rounded-xl border border-[#dbe1da] bg-white px-3 py-2.5 text-sm outline-none transition placeholder:text-[#abb2ac] focus:border-[#4a875e] focus:ring-2 focus:ring-[#4a875e]/10; }
+  .ledger-panel { @apply min-w-0 max-w-full overflow-hidden rounded-[22px] border border-[#dcded6] bg-[#fffdf8]; }
+  .metric-card { @apply min-w-0 max-w-full rounded-[18px] border border-[#dcded6] bg-[#fffdf8] p-5; }
+  .hallmark { @apply rounded-md border border-[#b99443] bg-[#fff7df] px-2 py-1 text-[10px] font-extrabold tracking-[.1em] text-[#7b5510]; }
+  .filter-chip { @apply shrink-0 rounded-full border border-[#d9ddd5] bg-[#fffdf8] px-3 py-2 text-xs font-bold text-[#617067] transition hover:border-[#8da092]; }
+  .filter-chip-active { @apply border-[#1d6b3a] bg-[#e7f0e7] text-[#195d33]; }
+  .choice-button { @apply min-h-14 rounded-xl border border-[#d9ddd5] bg-[#fffdf8] px-2 text-xs font-bold text-[#617067] transition hover:border-[#8da092]; }
+  .choice-button-active { @apply border-[#1d6b3a] bg-[#e7f0e7] text-[#195d33] ring-2 ring-[#1d6b3a]/10; }
+  .profit-lens { @apply rounded-[22px] bg-[#173d29] p-5 text-white shadow-[inset_0_0_0_1px_rgba(245,216,140,.14)]; }
+  .money-input { @apply flex items-center overflow-hidden rounded-xl border border-[#dbe1da] bg-white focus-within:border-[#4a875e] focus-within:ring-2 focus-within:ring-[#4a875e]/10; }
+  .money-input span { @apply border-r border-[#e1e4de] bg-[#f5f3ec] px-3 py-2.5 text-xs font-extrabold text-[#617067]; }
+  .money-input input { @apply min-w-0 flex-1 border-0 bg-transparent px-3 py-2.5 text-sm outline-none ring-0; }
+  .icon-button { @apply inline-flex h-11 w-11 items-center justify-center rounded-xl text-[#5e6a62] transition hover:bg-[#f0eee7]; }
+  .icon-button svg { @apply h-5 w-5; }
+  .status-stamp { @apply inline-flex whitespace-nowrap rounded-full border px-2 py-0.5 text-[9px] font-extrabold uppercase tracking-[.06em]; }
+  .status-new { @apply border-[#cfd5d0] bg-[#f4f5f2] text-[#58655d]; }
+  .status-sourcing { @apply border-[#d6c8a7] bg-[#fbf2dd] text-[#735719]; }
+  .status-secured { @apply border-[#b9d0d1] bg-[#e8f2f2] text-[#316267]; }
+  .status-ready { @apply border-[#9fc4ab] bg-[#e5f2e8] text-[#1f6840]; }
+  .status-delivered { @apply border-[#9ab6d0] bg-[#e7eff7] text-[#315d84]; }
+  .status-complete { @apply border-[#7bae8c] bg-[#dff0e4] text-[#195e35]; }
+  .status-danger { @apply border-[#dfaaa2] bg-[#fae9e6] text-[#913c31]; }
 }
 
 @media (max-width: 640px) {
   .card { border-radius: 1.25rem; }
+  .modal-actions > :first-child { width: 100%; margin-right: 0; text-align: left; min-height: 2.75rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }
